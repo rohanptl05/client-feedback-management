@@ -6,11 +6,11 @@ const FeedbacksSchema = new Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "users", // Refers to the User model
   },
-  subject: { 
+  title: { 
     type: String,
     required: true,
   },
-  feedback: { 
+  desc: { 
     type: String,
     required: true,
   },
@@ -25,12 +25,20 @@ const FeedbacksSchema = new Schema({
   },
   attachment: {
     type: String, // File path or URL
+    default: null,
+  },
+  priorities: {
+    type: String,
+    enum: ['Low', 'High', 'Urgent'], 
+    default: 'Low', 
   },
   response: {
     type: String, // Admin response
+    default: null,
   },
   resolvedDate: {
     type: Date, // When the feedback was resolved
+    default: null,
   },
   category: {
     type: String,

@@ -4,10 +4,10 @@ import { body, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 import fetchuser from "../middleware/fetchuser.js";
 import jwt from "jsonwebtoken";
-import { cloneElement } from "react";
+
 
 const router = express.Router();
-const JWT_SECRET = "dcinfotech";
+const JWT_SECRET =  "dcinfotech";
 
 
 //Router: 1 create user
@@ -84,6 +84,7 @@ router.post('/login',[
             }
         }
         const authtoken = jwt.sign(data,JWT_SECRET);
+        success=true;
         res.json({success,authtoken})
      } catch (error) {
         console.error(error.message);

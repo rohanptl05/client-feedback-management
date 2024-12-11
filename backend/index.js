@@ -2,6 +2,8 @@ import mongoose  from "mongoose";
 import express from "express";
 import cors from "cors";
 import authRouter from "./routers/auth.js";
+import feedbacks from "./routers/feedbacks.js";
+
 
 
 
@@ -26,6 +28,7 @@ app.use(cors())
 app.use(express.json())
 
 app.use('/api/auth',authRouter)
+app.use('/api/feedbacks',feedbacks)
 
 
 
