@@ -15,7 +15,7 @@ router.post('/createuser', [
     body('name', 'Enter a valid Name').isLength({ min: 3 }),
     body('email', "Enter a valid Email").isEmail(),
     body('password', "Password must be atlest 5 charecters").isLength({ min: 5 }),
-    body('type',"valid input"),
+   
 
 ],async (req,res) =>{
     let success=false;
@@ -36,7 +36,7 @@ router.post('/createuser', [
             name:req.body.name,
             email:req.body.email,
             password:genPass,
-            type:req.body.type,
+            
         });
         const data ={
             user :{

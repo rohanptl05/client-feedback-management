@@ -6,9 +6,6 @@ import feedbacks from "./routers/feedbacks.js";
 
 
 
-
-
-
 const connectMongo = async () => {
     try {
         await mongoose.connect("mongodb://localhost:27017/feedback-data");

@@ -24,15 +24,17 @@ function App() {
   return (
     <>
       <FeedbackState>
-        <Router>
+      <Router>
           <Navbar />
           <Alert alert={alert} />
-          <Routes>
-            <Route path="/" element={<Home showAlert={showAlert} />} />
-            <Route path="/about" element={<About />} />
-            <Route exact path="/login" element={<Login showAlert={showAlert} />} />
-            <Route exact path="/signup" element={<Signup showAlert={showAlert} />} />
-          </Routes>
+          <div className="container">
+            <Routes>
+              <Route exact path="/" element={<Home showAlert={showAlert} />} />
+              <Route exact path="/about" element={<About />} />
+              <Route exact path="/login" element={<Login showAlert={showAlert}/>} />
+              <Route exact path="/signup" element={<Signup showAlert={showAlert}/>} />
+            </Routes>
+          </div>
         </Router>
       </FeedbackState>
     </>
