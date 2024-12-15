@@ -67,7 +67,7 @@ const editFeedback = async (id,title, desc, attachment, category, priorities) =>
         },
         body: JSON.stringify({title, desc, attachment, category, priorities})
     });
-     
+     console.log(response)
     let newFeedbacks = JSON.parse(JSON.stringify(feedbacks))
 
     // logic to Edit clint us feedbacks

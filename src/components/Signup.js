@@ -9,8 +9,8 @@ const Signup = (props) => {
     const {name,email,password}=credentials;
     const response = await fetch("http://localhost:6000/api/auth/createuser", {
       method: "POST",
-      headers: {
-        "content-Type": "application/json",
+      headers: { 
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({name,email,password}),
     });
