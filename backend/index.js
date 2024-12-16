@@ -18,7 +18,7 @@ const connectMongo = async () => {
 connectMongo();
 
 const app = express();
-const port =6000
+const port =5001
 
 
 app.use(cors())
