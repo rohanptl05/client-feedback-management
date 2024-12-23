@@ -29,7 +29,6 @@ const FeedbacksSchema = new Schema({
   },
   priorities: {
     type: String,
-    enum: ['Low', 'High', 'Urgent'], 
     default: 'Low', 
   },
   response: {
@@ -42,7 +41,6 @@ const FeedbacksSchema = new Schema({
   },
   category: {
     type: String,
-    enum: ['Bug', 'Feature Request', 'Complaint', 'General'],
     default: 'General',
   },
 });

@@ -8,6 +8,7 @@ import FeedbackState from './context/feedbacks/feedbackState.js';
 import Alert from "./components/Alert.js";
 import Login from "./components/Login.js";
 import Signup from './components/Signup.js';
+import Admin from './components/Admin.js';
 import { useState } from 'react';
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
             <Routes>
               <Route exact path="/" element={<Home showAlert={showAlert} />} />
               <Route exact path="/about" element={<About />} />
+              <Route exact path="/admin" element={<Admin/>} />
               <Route exact path="/login" element={<Login showAlert={showAlert}/>} />
               <Route exact path="/signup" element={<Signup showAlert={showAlert}/>} />
             </Routes>

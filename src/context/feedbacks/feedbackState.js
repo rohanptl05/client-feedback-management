@@ -1,8 +1,9 @@
 import { useState } from "react";
 import FeedbackContext from "./feedbackContext";
 
+
 const FeedbackState = (props) => {
-    const host = "http://localhost:5001";
+    const host = "http://localhost:5000";
     const feedbackInitial = [];
     const [feedback,setFeedback] = useState(feedbackInitial);
 
@@ -13,46 +14,60 @@ const FeedbackState = (props) => {
             method: 'GET',
             headers: {
                 'Content-type': 'application/json',
-                'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjc1YzZhNzc0YTM0OTY5MDEzN2RiZGE3In0sImlhdCI6MTczNDEwOTgxNX0.l-C9WifmHNcIT4BA4HIGrTqaPZUCliq4CtKkf4Ye0Xc'
+                'auth-token':localStorage.getItem('token')
             }
         });
         const json = await response.json()
-            console.log(json)
+          
             setFeedback(json)
         
 
     }
-
-
  //Addfeed
-  const addFeedback =(title,desc, attachment,category,priorities)=>{
+  const addFeedback =async(title,desc, attachment,category,priorities)=>{
 
-    const feedbacks ={
-        "_id": "675db638d2csb1d4d707fff07",
-        "user": "675c6a774a349690137dbda7",
-        "title": title,
-        "desc": desc,
-        "status": "Pending",
-        "attachment": attachment,
-        "priorities": priorities,
-        "response": null,
-        "resolvedDate": null,
-        "category": category,
-        "date": "2024-12-14T16:45:44.910Z",
-        "__v": 0
-      }
-      setFeedback(feedback.concat(feedbacks))
+   const responce = await fetch(`${host}/api/feedbacks/addfeedbacks`,{
+    method:'POST',
+    headers:{
+        'Content-type':'application/json',
+        'auth-token':localStorage.getItem('token')
 
+    },
+    body:JSON.stringify({title,desc, attachment,category,priorities})
+   })
+      const feedbackss = await responce.json()
+      setFeedback(feedback.concat(feedbackss))
   }
+  
+  
+  
+  
+  
   //delete feedbacks
-const deleteFeedback =(id)=>{
+const deleteFeedback =async(id)=>{
+    const responce = await fetch(`${host}/api/feedbacks/deletefeedbacks/${id}`,{
+        method:'DELETE',
+        headers:{
+            'Content-type':'application/json',
+            'auth-token':localStorage.getItem('token')
+        }
+    })
     const newfeedback = feedback.filter((feed)=>{return feed._id !==id})
     setFeedback(newfeedback)
    
 
 }
 //edit feedbacks
-const editFeedback =(id,title,desc,attachment,priorities,category)=>{
+const editFeedback = async(id,title,desc,attachment,priorities,category)=>{
+    const responce = await fetch(`${host}/api/feedbacks/updatefeedbacks/${id}`,{
+        method:'PUT',   
+        headers:{
+            'Content-type':'application/json',
+            'auth-token':localStorage.getItem('token')
+        },
+        body: JSON.stringify({ title, desc,attachment,priorities,category })
+    })
+    const newfeedback = feedback.filter((feed)=>{return feed._id !==id})
    for (let index = 0; index < feedback.length; index++) {
     const element = feedback[index];
     if(element._id === id){
@@ -68,7 +83,7 @@ const editFeedback =(id,title,desc,attachment,priorities,category)=>{
 }
 
 return(
-    <FeedbackContext.Provider value={{feedback,setFeedback,addFeedback,deleteFeedback,getFeedback}}>
+    <FeedbackContext.Provider value={{feedback,setFeedback,addFeedback,deleteFeedback,getFeedback,editFeedback}}>
          {props.children}
     </FeedbackContext.Provider>
 )

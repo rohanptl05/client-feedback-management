@@ -8,22 +8,19 @@ const { addFeedback } = context;
 const [feedback, setFeedback] = useState({
 title: "",
 desc: "",
-attachment: "",
-category: "",
-priorities: ""
+attachment: "NO File",
+category: "General" ,
+priorities: "Low"
 });
 
 const handleClick = (e) => {
-  e.preventDefault();
-  addFeedback(feedback.title,feedback.desc,feedback.attachment,feedback.category,feedback.priorities)
-
-// setFeedback({
-// title: "",
-// desc: "",
-// attachment: "",
-// category: "",
-// priorities: ""
-// });
+e.preventDefault();
+addFeedback(feedback.title,feedback.desc,feedback.attachment,feedback.category,feedback.priorities)
+setFeedback({title: "",
+  desc: "",
+  attachment: "",
+  category: "",
+  priorities: ""})
 props.showAlert("Feedback added successfully", "success");
 };
 
@@ -53,23 +50,47 @@ return (
       <label htmlFor="attachment" className="form-label">
         Attachment
       </label>
-      <input type="file" className="form-control" id="attachment" name="attachment" onChange={handleOnChange}
-      />
+      <input type="file" className="form-control" id="attachment" name="attachment" onChange={handleOnChange} />
     </div>
     <div className="mb-3">
-      <label htmlFor="category" className="form-label">
-        Category
-      </label>
-      <input type="text" className="form-control" id="category" minLength={5} required value={feedback.category}
-        name="category" onChange={handleOnChange} />
-    </div>
-    <div className="mb-3">
-      <label htmlFor="priorities" className="form-label">
-        Priorities
-      </label>
-      <input type="text" className="form-control" id="priorities" minLength={5} required value={feedback.priorities}
-        name="priorities" onChange={handleOnChange} />
-    </div>
+  <label htmlFor="category" className="form-label">
+    Category
+  </label>
+  <select
+    className="form-control"
+    id="category"
+    value={feedback.category}
+    name="category"
+    onChange={handleOnChange}
+    required
+  >
+    <option value="">Select a category</option>
+    <option value="Bug">Bug</option>
+    <option value="Feature Request">Feature Request</option>
+    <option value="Complaint">Complaint</option>
+    <option  value="General">General</option>
+  </select>
+</div>
+
+<div className="mb-3">
+  <label htmlFor="priorities" className="form-label">
+    Priorities
+  </label>
+  <select
+    className="form-control"
+    id="priorities"
+    value={feedback.priorities}
+    name="priorities"
+    onChange={handleOnChange}
+    required
+  >
+    <option value="">Select a priority</option>
+    <option value="Low">Low</option>
+    <option value="High">High</option>
+    <option value="Urgent">Urgent</option>
+  </select>
+</div>
+
     <button type="submit" disabled={feedback.title.length < 5 || feedback.desc.length < 5} className="btn btn-primary"
       onClick={handleClick}>
       Add Feedback
