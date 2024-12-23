@@ -49,6 +49,8 @@ const Login = (props) => {
   
         const userJson = await userResponse.json();
         localStorage.setItem("type", userJson.type);
+        localStorage.setItem("name", userJson.name);
+
   
         if (!userResponse.ok) {
           throw new Error(userJson.message || "Failed to fetch user details.");

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import feedbackContext from "../context/feedbacks/feedbackContext";
 
-const AddFeedback = props => {
+const AddFeedback = (props) => {
 const context = useContext(feedbackContext);
 const { addFeedback } = context;
 
@@ -24,7 +24,7 @@ setFeedback({title: "",
 props.showAlert("Feedback added successfully", "success");
 };
 
-const handleOnChange = e => {
+const handleOnChange = (e) => {
 setFeedback({ ...feedback, [e.target.name]: e.target.value });
 };
 
