@@ -82,8 +82,40 @@ const editFeedback = async(id,title,desc,attachment,priorities,category)=>{
 
 }
 
+const searchFeedback = async (filters) => {
+    try {
+      const queryParams = new URLSearchParams(filters).toString();
+      const response = await fetch(`${host}/api/feedbacks/searchfeedback?${queryParams}`, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+      });
+      const newFeedback = await response.json();
+      console.log(newFeedback);
+      setFeedback(newFeedback); // Update feedback state
+    } catch (error) {
+      console.error("Error fetching feedbacks:", error);
+    }
+  };
+  
+ const allfetchfeedbacks = async () =>{
+    const responce = await fetch(`${host}/api/feedbacks/allfetchfeedbacks`,{
+        method:'GET',
+        headers:{
+            'Content-type':'application/json',
+            'auth-token':localStorage.getItem('token')
+        }   
+        
+    })
+    const newfeedback = await responce.json()
+    setFeedback(newfeedback)
+    // console.log(newfeedback)
+ }          
+
 return(
-    <FeedbackContext.Provider value={{feedback,setFeedback,addFeedback,deleteFeedback,getFeedback,editFeedback}}>
+    <FeedbackContext.Provider value={{feedback,setFeedback,addFeedback,deleteFeedback,getFeedback,editFeedback,searchFeedback}}>
          {props.children}
     </FeedbackContext.Provider>
 )

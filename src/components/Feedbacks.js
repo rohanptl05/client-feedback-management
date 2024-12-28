@@ -9,8 +9,8 @@ import AddFeedback from "./AddFeedback";
 const Feedbacks = (props) => {
   // let navigate = useNavigate();
   const context = useContext(feedbackContext);
-  const [feeds, setFeeds] = useState({ id: "", etitle: "", edesc: "", eattachment: "", epriorities: "", ecategory: "" })
   const { feedback, getFeedback, editFeedback } = context;
+  const [feeds, setFeeds] = useState({ id: "", etitle: "", edesc: "", eattachment: "", epriorities: "", ecategory: "" })
   useEffect(() => {
     if (localStorage.getItem("token")) {
 

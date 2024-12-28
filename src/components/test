@@ -1,86 +1,51 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { apiRequest } from "./api";
+<div className="mt-5">
+<h2 className="text-lg font-bold">Filtered Feedbacks</h2>
+{feedback && feedback.length > 0 ? (
+  <ul className="list-disc pl-5">
+    {feedback.map((item, index) => (
+      <li key={index} className="mt-2">
+        <strong>{item.title}</strong>: {item.description}
+      </li>
+    ))}
+  </ul>
+) : (
+  <p>No feedback found for the selected filters.</p>
+)}
+</div>
 
-const Login = (props) => {
-  const [credentials, setCredentials] = useState({ email: "", password: "" });
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!credentials.email || !credentials.password) {
-      props.showAlert("Please fill in all fields", "warning");
-      return;
-    }
 
-    setIsLoading(true);
-    try {
-      // Login API call
-      const loginData = await apiRequest("/api/auth/login", "POST", credentials);
 
-      // Save token in localStorage
-      localStorage.setItem("token", loginData.authtoken);
 
-      // Fetch user details
-      const userData = await apiRequest("/api/auth/getuser", "POST", null, loginData.authtoken);
 
-      // Save user type in localStorage
-      localStorage.setItem("type", userData.type);
+import React, { useContext} from 'react'
+import feedbackContext from "../context/feedbacks/feedbackContext";
 
-      props.showAlert("Logged in Successfully", "success");
-
-      // Redirect based on user type
-      if (userData.type === "A") {
-        navigate("/admin");
-      } else {
-        navigate("/");
-      }
-    } catch (error) {
-      console.error("Login Error:", error.message);
-      props.showAlert(error.message || "Login failed. Please try again.", "danger");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleOnchange = (e) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value });
-  };
-
+const Feedbackitem = (props) => {
+    const context = useContext(feedbackContext);
+   const {feedbacks} = context;
+    const { allfetchfeedbacks} = props;
   return (
-    <div className="container mt-3">
-      <h2>Login to continue to Client Feedbacks</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email address</label>
-          <input
-            value={credentials.email}
-            onChange={handleOnchange}
-            type="email"
-            className="form-control"
-            id="email"
-            name="email"
-            aria-describedby="emailHelp"
-          />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">Password</label>
-          <input
-            value={credentials.password}
-            onChange={handleOnchange}
-            type="password"
-            className="form-control"
-            id="password"
-            name="password"
-          />
-        </div>
-        <button type="submit" className="btn btn-primary" disabled={isLoading}>
-          {isLoading ? "Logging in..." : "Login"}
-        </button>
-      </form>
+    <div className="col-md-3 mx-1 row">
+    <div className="card my-2">
+      <div className="card-body">
+        {/* <h5 className="card-title"> {feedback._id}</h5> */}
+        <h5 className="card-title"> {allfetchfeedbacks.title}</h5>
+        <p className="card-text">{allfetchfeedbacks.desc} </p>
+        <p className="card-text">{allfetchfeedbacks.status} </p>
+        <p className="card-text">{allfetchfeedbacks.attachment} </p>
+        <p className="card-text">{allfetchfeedbacks.date} </p>
+        <p className="card-text">{allfetchfeedbacks.priorities} </p>
+        <p className="card-text">{allfetchfeedbacks.response} </p>
+        <p className="card-text">{allfetchfeedbacks.category} </p>
+        <p className="card-text">{allfetchfeedbacks.resolvedDate} </p>
+        {/* <i className="fa-regular fa-pen-to-square mx-2" onClick={()=>{updateFeedback(feedback)}}> edit</i> */}
+        {/* <i className="fa-sharp-duotone fa-solid fa-trash mx-2" onClick={()=>{deleteFeedback(feedback._id)}} > delete</i> */}
+        
+      </div>
     </div>
-  );
-};
+  </div>
+  )
+}
 
-export default Login;
+export default Feedbackitem;
